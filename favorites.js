@@ -186,7 +186,7 @@ function renderPaginator(currentPage) {
         </a>
       </li>
   `
-  paginator.innerHTML = rawHTML
+  paginator.innerHTML = data.length ? rawHTML : ''
 }
 
 // Remove favorite item
@@ -263,8 +263,7 @@ paginator.addEventListener('click', function onPaginatorClicked(event) {
 modalFooter.addEventListener('click', function onModalFooterClicked(event) {
   if (event.target.matches('#friend-modal-remove-favorite')) {
     removeFromFavorites(Number(event.target.dataset.id))
-    renderFriendList(getFriendDataByPage(1))
-    renderPaginator(1)
+    location.reload()
   }
 })
 /////////////// Event Listener Group End Here /////////////////
