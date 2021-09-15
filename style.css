@@ -60,17 +60,17 @@ main::before {
 
 #carousel-image-1 {
   background: linear-gradient(180deg, rgba(0,0,0,.7) 0%, rgba(71,70,70,0) 50%, rgba(0,0,0,.7) 100%),
-  url('https://image.shutterstock.com/shutterstock/photos/1201677928/display_1500/stock-photo-group-of-happy-friends-having-breakfast-in-the-restaurant-1201677928.jpg');
+  url('https://github.com/Richie-Yang/online-meet/blob/main/images/7-1.%20eatup.jpg?raw=true');
 }
 
 #carousel-image-2 {
   background: linear-gradient(180deg, rgba(0,0,0,.7) 0%, rgba(71,70,70,0) 50%, rgba(0,0,0,.7) 100%), 
-  url('https://image.shutterstock.com/shutterstock/photos/275521547/display_1500/stock-photo-group-of-friends-standing-by-car-on-coastal-road-at-sunset-275521547.jpg');
+  url('https://github.com/Richie-Yang/online-meet/blob/main/images/7-2.%20travel.jpg?raw=true');
 }
 
 #carousel-image-3 {
   background: linear-gradient(180deg, rgba(0,0,0,.7) 0%, rgba(71,70,70,0) 50%, rgba(0,0,0,.7) 100%), 
-  url('https://image.shutterstock.com/shutterstock/photos/1125465083/display_1500/stock-photo-group-of-friends-celebrating-with-champagne-1125465083.jpg');
+  url('https://github.com/Richie-Yang/online-meet/blob/main/images/7-3.%20party.jpg?raw=true');
 }
 
 #carousel-images-set {
