@@ -10,7 +10,7 @@
 - Search through more-than-basic filtering options
 - Manage your people to in favorite list
 
-## Technics
+## Techniques
 
 ### HTML + CSS
 - Most components are from bootstrap, such as header, carousel, form, and card.
@@ -31,7 +31,7 @@
   <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/2.%20desktop-2.jpg?raw=true">
 </p>
 
-### favorite.html footer view
+### favorites.html footer view
 <p align="center">
   <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/3.%20desktop-3.jpg?raw=true">
 </p>
