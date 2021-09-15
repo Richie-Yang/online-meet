@@ -75,7 +75,7 @@ function renderFormAgeOptions(data) {
 
   data.forEach(dataItem => {
     if (dataItem.age > maxAge) maxAge = dataItem.age
-    if (minAge > maxAge) minAge = maxAge
+    if (minAge > dataItem.age) minAge = dataItem.age
   })
   const ageDifference = Math.ceil((maxAge - minAge) / ageGroup)
 
