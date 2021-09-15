@@ -38,8 +38,8 @@
 
 ## Credits For Inspiration
 - Carousel and search-form overlap design from annoymous movie site
-- Card box-shadow and Complete layout from [Pinterest](https://www.pinterest.com/pin/430867889354493874/)
-- Card hovering border effect from Alphacamp 2-3 fontend course
+- Card box-shadow and whole layout from [Pinterest](https://www.pinterest.com/pin/430867889354493874/)
+- Card hovering border effect from AlphaCamp 2-3 fontend course
 - Footer design from [Tinder](https://tinder.com/)
 
 ## License
