@@ -1,1 +1,41 @@
 # online-meet
+
+<p align="center">
+  <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/1.%20desktop-1.jpg?raw=true">
+</p>
+
+## Features
+
+- Having over 80 fake people online
+- Search through more-than-basic filtering options
+- Manage your people to in favorite list
+
+## Technics
+
+### HTML + CSS
+- Most components are from bootstrap, such as header, carousel, form, and card.
+- Social column in footer has custom icons from Fontawesome.
+- Card hovering effect and anything associated with background are all personally customized.
+- Following "Mobile-first" concept when making this project.
+
+### JavaScript
+- Using Axios to request remote server resource, then process it on brower local.
+- Handmade both search-form filtering logic and pagination logic.
+- Storing your interest to favorite list by localStorage tech.
+
+## Other Screenshots
+
+### index.html footer view
+
+<p align="center">
+  <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/2.%20desktop-2.jpg?raw=true">
+</p>
+
+### favorite.html footer view
+<p align="center">
+  <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/3.%20desktop-3.jpg?raw=true">
+</p>
+
+## License
+
+OnlineMeet is available under the [MIT license](https://opensource.org/licenses/MIT).
