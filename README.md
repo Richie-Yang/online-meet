@@ -1,4 +1,4 @@
-# online-meet
+# OlineMeet
 
 <p align="center">
   <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/1.%20desktop-1.jpg?raw=true">
@@ -35,6 +35,12 @@
 <p align="center">
   <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/3.%20desktop-3.jpg?raw=true">
 </p>
+
+## Credits For Inspiration
+- Carousel and search-form overlap design from annoymous movie site
+- Card box-shadow and Complete layout from [Pinterest](https://www.pinterest.com/pin/430867889354493874/)
+- Card hovering border effect from Alphacamp 2-3 fontend course
+- Footer design from [Tinder](https://tinder.com/)
 
 ## License
 
