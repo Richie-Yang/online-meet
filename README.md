@@ -8,7 +8,7 @@
 
 - Having over 80 fake people online
 - Search through more-than-basic filtering options
-- Manage your people to in favorite list
+- Manage all your friends in favorite list
 
 ## Techniques
 
@@ -19,9 +19,9 @@
 - Following "Mobile-first" concept when making this project.
 
 ### JavaScript
-- Using Axios to request remote server resource, then process it on brower local.
+- Using Axios to request remote server resources, then process them in brower local.
 - Handmade both search-form filtering logic and pagination logic.
-- Storing your interest to favorite list by localStorage tech.
+- Archive your interest to favorite list by using localStorage tech.
 
 ## Other Screenshots
 
