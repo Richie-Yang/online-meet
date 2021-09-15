@@ -189,8 +189,9 @@ function renderPaginator(currentPage) {
 
 // Remove favorite item
 function removeFromFavorites(id) {
-  const removedIndex = friendList.findIndex(friend => friend.id === id)
-  friendList.splice(removedIndex, 1)
+  friendList.forEach((friend, index) => {
+    if (Number(friend.id) === id) friendList.splice(index, 1)
+  })
   localStorage.setItem('favoriteFriendList', JSON.stringify(friendList))
 }
 /////////////// Function Group End Here /////////////////
