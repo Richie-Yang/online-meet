@@ -31,7 +31,9 @@ const countryMap = {
   fr: 'France (FR)'
 }
 
-// Function to render friend list
+
+/////////////// Function Group Start Here /////////////////
+// Render friend list
 function renderFriendList(data) {
   // Using array.map to create an array of HTML contents, then use 
   // join function to merge them together
@@ -57,6 +59,7 @@ function renderFriendList(data) {
   }
 }
 
+// Get friend data by specific page
 function getFriendDataByPage(page) {
   const endIndex = page * FRIENDS_PER_PAGE
   const startIndex = endIndex - FRIENDS_PER_PAGE
@@ -64,6 +67,7 @@ function getFriendDataByPage(page) {
   return data.slice(startIndex, endIndex)
 }
 
+// Render age options
 function renderFormAgeOptions(data) {
   const ageGroup = 5
   let minAge = 100
@@ -86,6 +90,7 @@ function renderFormAgeOptions(data) {
   formSelectAge.innerHTML = rawHTML
 }
 
+// Render region options
 function renderFormRegionOptions(data) {
   const regionArray = []
   let rawHTML = '<option>All</option>'
@@ -101,7 +106,7 @@ function renderFormRegionOptions(data) {
   formSelectRegion.innerHTML = rawHTML
 }
 
-// Function to render friend modal
+// Render friend modal
 function renderFriendModal(id) {
   // Using querySelector to extract specific DOM object for later change
   const name = document.querySelector('#friend-modal-name')
@@ -131,6 +136,7 @@ function renderFriendModal(id) {
     }).catch(err => console.log(err))
 }
 
+// Render paginator
 function renderPaginator(currentPage) {
   const data = filteredFriendList.length ? filteredFriendList : friendList
   TOTAL_PAGES = Math.ceil(data.length / FRIENDS_PER_PAGE)
@@ -180,13 +186,18 @@ function renderPaginator(currentPage) {
   paginator.innerHTML = rawHTML
 }
 
+// add favorite item
 function addToFavorites(id){
   const favoriteList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
   if (favoriteList.some(favoriteFriend => favoriteFriend.id === id)) return alert ('He/She is already in your Favorites!')
   favoriteList.push(friendList.find(friend => friend.id === id))
   localStorage.setItem('favoriteFriendList', JSON.stringify(favoriteList))
 }
+/////////////// Function Group End Here /////////////////
 
+
+/////////////// Event Listener Group Start Here /////////////////
+// For search form
 topPanel.addEventListener('input', function onTopPanelInput(event) {
   const formSearch = document.querySelector('#form-search')
   const keyword = formSearch.value.trim().toLowerCase()
@@ -217,13 +228,14 @@ topPanel.addEventListener('input', function onTopPanelInput(event) {
   renderPaginator(1)
 })
 
-// Bind event listener to data-panel for image-clicked event
+// For friend list
 dataPanel.addEventListener('click', function onDataPanelClicked(event) {
   if (event.target.matches('.card-image-wrapper img')) {
     renderFriendModal(Number(event.target.dataset.id))
   }
 })
 
+// For pages
 paginator.addEventListener('click', function onPaginatorClicked(event) {
   
   if (event.target.tagName === 'A' || event.target.tagName === 'SPAN') {
@@ -244,13 +256,16 @@ paginator.addEventListener('click', function onPaginatorClicked(event) {
   }
 })
 
+// For modal
 modalFooter.addEventListener('click', function onModalFooterClicked(event) {
   if (event.target.matches('#friend-modal-add-favorite')) {
     addToFavorites(Number(event.target.dataset.id))
   }
 })
+/////////////// Event Listener Group End Here /////////////////
 
-// Initialize the frind list and invoke the function to render
+
+// Initialize the friend list and invoke the function to render
 axios.get(INDEX_URL)
   .then(rep => {
     friendList.push(...rep.data.results)
