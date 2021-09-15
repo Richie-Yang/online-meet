@@ -81,12 +81,14 @@ function renderFormAgeOptions(data) {
   const ageDifference = Math.ceil((maxAge - minAge) / ageGroup)
 
   let rawHTML = '<option>All</option>'
-  for (let i = 0; i < ageGroup; i++) {
-    const startAgeNumber = (i * ageDifference) + minAge
-    const endAgeNumber = startAgeNumber + ageDifference
-    rawHTML += `
+  if (data.length !== 0) {
+    for (let i = 0; i < ageGroup; i++) {
+      const startAgeNumber = (i * ageDifference) + minAge
+      const endAgeNumber = startAgeNumber + ageDifference
+      rawHTML += `
     <option>${startAgeNumber} - ${endAgeNumber}</option>
     `
+    }
   }
   formSelectAge.innerHTML = rawHTML
 }
