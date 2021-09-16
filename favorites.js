@@ -109,6 +109,28 @@ function renderFormRegionOptions(data) {
   formSelectRegion.innerHTML = rawHTML
 }
 
+// Process friend data by filtering options
+function filterFriendsByForm(data) {
+  const formSearch = document.querySelector('#form-search')
+  const keyword = formSearch.value.trim().toLowerCase()
+  const formCheckboxMale = document.querySelector('#form-checkbox-male').checked ? 'male' : ''
+  const formCheckboxFemale = document.querySelector('#form-checkbox-female').checked ? 'female' : ''
+  const region = formSelectRegion.value !== 'All' ? formSelectRegion.value : ''
+  let minAge = 0
+  let maxAge = 100
+
+  if (formSelectAge.value !== 'All') {
+    const regex = /(\d+) - (\d+)/
+    minAge = Number(regex.exec(formSelectAge.value)[1])
+    maxAge = Number(regex.exec(formSelectAge.value)[2])
+  }
+
+  filteredFriendList = data.filter(friend => friend.name.toLowerCase().includes(keyword))
+  filteredFriendList = filteredFriendList.filter(friend => friend.gender === formCheckboxMale || friend.gender === formCheckboxFemale)
+  filteredFriendList = filteredFriendList.filter(friend => friend.age >= minAge && friend.age <= maxAge)
+  filteredFriendList = filteredFriendList.filter(friend => friend.region.includes(region))
+}
+
 // Render friend modal
 function renderFriendModal(id) {
   // Using querySelector to extract specific DOM object for later change
@@ -191,9 +213,8 @@ function renderPaginator(currentPage) {
 
 // Remove favorite item
 function removeFromFavorites(id) {
-  friendList.forEach((friend, index) => {
-    if (Number(friend.id) === id) friendList.splice(index, 1)
-  })
+  const removedIndex = friendList.findIndex(friend => friend.id === id)
+  friendList.splice(removedIndex, 1)
   localStorage.setItem('favoriteFriendList', JSON.stringify(friendList))
 }
 /////////////// Function Group End Here /////////////////
@@ -201,32 +222,15 @@ function removeFromFavorites(id) {
 
 /////////////// Event Listener Group Start Here /////////////////
 // For search form
-topPanel.addEventListener('input', function onTopPanelInput(event) {
-  const formSearch = document.querySelector('#form-search')
-  const keyword = formSearch.value.trim().toLowerCase()
-  const formCheckboxMale = document.querySelector('#form-checkbox-male').checked ? 'male' : ''
-  const formCheckboxFemale = document.querySelector('#form-checkbox-female').checked ? 'female' : ''
-  const region = formSelectRegion.value !== 'All' ? formSelectRegion.value : ''
-  let minAge = 0
-  let maxAge = 100
-
-  if (formSelectAge.value !== 'All') {
-    const regex = /(\d+) - (\d+)/
-    minAge = Number(regex.exec(formSelectAge.value)[1])
-    maxAge = Number(regex.exec(formSelectAge.value)[2])
-  }
-
-  filteredFriendList = friendList.filter(friend => friend.name.toLowerCase().includes(keyword))
-  filteredFriendList = filteredFriendList.filter(friend => friend.gender === formCheckboxMale || friend.gender === formCheckboxFemale)
-  filteredFriendList = filteredFriendList.filter(friend => friend.age >= minAge && friend.age <= maxAge)
-  filteredFriendList = filteredFriendList.filter(friend => friend.region.includes(region))
+topPanel.addEventListener('input', function onTopPanelInput() {
+  filterFriendsByForm(friendList)
 
   if (!filteredFriendList.length) {
     renderFriendList(filteredFriendList)
     paginator.innerHTML = ''
     return
   }
-
+  
   renderFriendList(getFriendDataByPage(1))
   renderPaginator(1)
 })
