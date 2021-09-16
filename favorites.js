@@ -9,6 +9,7 @@ const modalFooter = document.querySelector('#friend-modal-footer')
 
 const FRIENDS_PER_PAGE = 12
 let TOTAL_PAGES = 0
+let CURRENT_PAGE = 1
 const friendList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
 let filteredFriendList = []
 const countryMap = {
@@ -32,7 +33,7 @@ const countryMap = {
 }
 
 
-/////////////// Function Group Start Here /////////////////
+/////////////// Function Group Starts Here /////////////////
 // Render friend list
 function renderFriendList(data) {
   // Using array.map to create an array of HTML contents, then use 
@@ -162,34 +163,34 @@ function renderFriendModal(id) {
 }
 
 // Render paginator
-function renderPaginator(currentPage) {
+function renderPaginator(page) {
   const data = filteredFriendList.length ? filteredFriendList : friendList
   TOTAL_PAGES = Math.ceil(data.length / FRIENDS_PER_PAGE)
-  const pageArray = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2]
+  const pageArray = [page - 2, page - 1, page, page + 1, page + 2]
 
   let rawHTML = `
       <li class="page-item">
-        <a class="page-link page-previous" href="#" aria-label="Previous">
+        <a class="page-link page-previous" href="#data-panel" aria-label="Previous">
           <span class="page-previous" aria-hidden="true">&laquo;</span>
         </a>
       </li>
   `
   if (!pageArray.includes(1)) {
     rawHTML += `
-      <li class="page-item"><a class="page-link page-number" href="#" data-page="1">1</a></li>
+      <li class="page-item"><a class="page-link page-number" href="#data-panel" data-page="1">1</a></li>
       <li class="page-item"><a class="page-link" href="#">...</a></li>
     `
   }
 
-  pageArray.forEach(page => {
-    if (page > 0 && page <= TOTAL_PAGES) {
-      if (page === currentPage) {
+  pageArray.forEach(pageItem => {
+    if (pageItem > 0 && pageItem <= TOTAL_PAGES) {
+      if (pageItem === page) {
         rawHTML += `
-        <li class="page-item active"><a class="page-link page-number" href="#" data-page="${page}">${page}</a></li>
+        <li class="page-item active"><a class="page-link page-number" href="#data-panel" data-page="${pageItem}">${pageItem}</a></li>
       `
       } else {
         rawHTML += `
-        <li class="page-item"><a class="page-link page-number" href="#" data-page="${page}">${page}</a></li>
+        <li class="page-item"><a class="page-link page-number" href="#data-panel" data-page="${pageItem}">${pageItem}</a></li>
       `
       }
     }
@@ -198,17 +199,17 @@ function renderPaginator(currentPage) {
   if (!pageArray.includes(TOTAL_PAGES)) {
     rawHTML += `
       <li class="page-item"><a class="page-link" href="#">...</a></li>
-      <li class="page-item"><a class="page-link page-number" href="#" data-page="${TOTAL_PAGES}">${TOTAL_PAGES}</a></li>
+      <li class="page-item"><a class="page-link page-number" href="#data-panel" data-page="${TOTAL_PAGES}">${TOTAL_PAGES}</a></li>
     `
   }
   rawHTML += `
       <li class="page-item">
-        <a class="page-link page-next" href="#" aria-label="Next">
+        <a class="page-link page-next" href="#data-panel" aria-label="Next">
           <span class="page-next" aria-hidden="true">&raquo;</span>
         </a>
       </li>
   `
-  paginator.innerHTML = data.length ? rawHTML : ''
+  paginator.innerHTML = rawHTML
 }
 
 // Remove favorite item
@@ -217,10 +218,10 @@ function removeFromFavorites(id) {
   friendList.splice(removedIndex, 1)
   localStorage.setItem('favoriteFriendList', JSON.stringify(friendList))
 }
-/////////////// Function Group End Here /////////////////
+/////////////// Function Group Ends Here /////////////////
 
 
-/////////////// Event Listener Group Start Here /////////////////
+/////////////// Event Listener Group Starts Here /////////////////
 // For search form
 topPanel.addEventListener('input', function onTopPanelInput() {
   filterFriendsByForm(friendList)
@@ -247,19 +248,18 @@ paginator.addEventListener('click', function onPaginatorClicked(event) {
 
   if (event.target.tagName === 'A' || event.target.tagName === 'SPAN') {
     const activeLink = document.querySelector('li.page-item.active')
-    let pageNumber = 0
 
     if (event.target.matches('a.page-number')) {
-      pageNumber = Number(event.target.dataset.page)
+      CURRENT_PAGE = Number(event.target.dataset.page)
     } else if (event.target.matches('.page-previous')) {
-      pageNumber = Number(activeLink.firstElementChild.dataset.page) - 1 || 1
+      CURRENT_PAGE = Number(activeLink.firstElementChild.dataset.page) - 1 || 1
     } else if (event.target.matches('.page-next')) {
-      pageNumber = Number(activeLink.firstElementChild.dataset.page) + 1 > TOTAL_PAGES ?
-        TOTAL_PAGES : Number(activeLink.firstElementChild.dataset.page) + 1
+      CURRENT_PAGE = Number(activeLink.firstElementChild.dataset.page) + 1 > TOTAL_PAGES ?
+      TOTAL_PAGES : Number(activeLink.firstElementChild.dataset.page) + 1
     } else return
 
-    renderFriendList(getFriendDataByPage(pageNumber))
-    renderPaginator(pageNumber)
+    renderFriendList(getFriendDataByPage(CURRENT_PAGE))
+    renderPaginator(CURRENT_PAGE)
   }
 })
 
@@ -270,7 +270,7 @@ modalFooter.addEventListener('click', function onModalFooterClicked(event) {
     location.reload()
   }
 })
-/////////////// Event Listener Group End Here /////////////////
+/////////////// Event Listener Group Ends Here /////////////////
 
 
 // Initialize the friend list and invoke the function to render
