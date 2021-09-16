@@ -1,3 +1,4 @@
+// Global variables / constants
 const BASE_URL = 'https://lighthouse-user-api.herokuapp.com/api/v1'
 const INDEX_URL = `${BASE_URL}/users`
 const dataPanel = document.querySelector('#data-panel')
@@ -34,7 +35,7 @@ const countryMap = {
 
 
 /////////////// Function Group Starts Here /////////////////
-// Render friend list
+// Render friend list in data panel
 function renderFriendList(data) {
   // Using array.map to create an array of HTML contents, then use 
   // join function to merge them together
@@ -60,7 +61,7 @@ function renderFriendList(data) {
   }
 }
 
-// Get friend data by specific page
+// Get friend data array by specific page
 function getFriendDataByPage(page) {
   const endIndex = page * FRIENDS_PER_PAGE
   const startIndex = endIndex - FRIENDS_PER_PAGE
@@ -68,7 +69,7 @@ function getFriendDataByPage(page) {
   return data.slice(startIndex, endIndex)
 }
 
-// Render age options
+// Render age options for search form
 function renderFormAgeOptions(data) {
   const ageGroup = 5
   let minAge = 100
@@ -91,7 +92,7 @@ function renderFormAgeOptions(data) {
   formSelectAge.innerHTML = rawHTML
 }
 
-// Render region options
+// Render region options for search form
 function renderFormRegionOptions(data) {
   const regionArray = []
   let rawHTML = '<option>All</option>'
@@ -107,7 +108,7 @@ function renderFormRegionOptions(data) {
   formSelectRegion.innerHTML = rawHTML
 }
 
-// Process friend data by filtering options
+// Process friend data array by filtering options
 function filterFriendsByForm(data) {
   const formSearch = document.querySelector('#form-search')
   const keyword = formSearch.value.trim().toLowerCase()
@@ -129,7 +130,7 @@ function filterFriendsByForm(data) {
   filteredFriendList = filteredFriendList.filter(friend => friend.region.includes(region))
 }
 
-// Render friend modal
+// Render friend detail in modal
 function renderFriendModal(id) {
   // Using querySelector to extract specific DOM object for later change
   const name = document.querySelector('#friend-modal-name')
@@ -159,7 +160,7 @@ function renderFriendModal(id) {
     }).catch(err => console.log(err))
 }
 
-// Render paginator
+// Render dynamic paginator, and toggle current page
 function renderPaginator(page) {
   const data = filteredFriendList.length ? filteredFriendList : friendList
   TOTAL_PAGES = Math.ceil(data.length / FRIENDS_PER_PAGE)
@@ -209,7 +210,7 @@ function renderPaginator(page) {
   paginator.innerHTML = rawHTML
 }
 
-// add favorite item
+// add favorite item into localStorage
 function addToFavorites(id){
   const favoriteList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
   if (favoriteList.some(favoriteFriend => favoriteFriend.id === id)) return alert ('He/She is already in your Favorites!')
@@ -241,7 +242,7 @@ dataPanel.addEventListener('click', function onDataPanelClicked(event) {
   }
 })
 
-// For pages
+// For paginator
 paginator.addEventListener('click', function onPaginatorClicked(event) {
   
   if (event.target.tagName === 'A' || event.target.tagName === 'SPAN') {
