@@ -258,11 +258,10 @@ function addToFavorites(id){
     return
   } else {
     sweetAlertWithBootstrapButtons.fire({
-      position: 'top-end',
       icon: 'success',
       title: 'Added Into Favorite List!',
       showConfirmButton: false,
-      height: 100,
+      height: 200,
       width: 400,
       timer: 800,
     })
