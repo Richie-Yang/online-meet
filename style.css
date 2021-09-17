@@ -97,6 +97,13 @@ main::before {
   z-index: 1; 
 }
 
+.ldBar {
+  color: rgb(98, 176, 243);
+  font-family: 'varela round';
+  font-size: 2em;
+  font-weight: 800;
+}
+
 .card {
   position: relative;
   min-height: 17rem;
@@ -176,7 +183,6 @@ main::before {
   text-align: center;
 }
 
-
 .card-body {
   transition: transform .5s;
 }
@@ -252,7 +258,7 @@ footer {
   #carousel-image-1, #carousel-image-2, #carousel-image-3 {
     border-radius: 5px;
   }
-  
+
   #carousel-images-set {
     margin: 0 auto;
   }

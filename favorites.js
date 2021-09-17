@@ -6,7 +6,7 @@ const topPanel = document.querySelector('#top-panel')
 const formSelectAge = document.querySelector('#form-select-age')
 const formSelectRegion = document.querySelector('#form-select-region')
 const paginator = document.querySelector('#paginator')
-const modalFooter = document.querySelector('#friend-modal-footer')
+
 
 const FRIENDS_PER_PAGE = 12
 let TOTAL_PAGES = 0
@@ -32,9 +32,40 @@ const countryMap = {
   gb: 'United Kingdom (GB)',
   fr: 'France (FR)'
 }
-
+// SweetAlert preset configuration
+const sweetAlertWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-danger mx-2',
+    cancelButton: 'btn btn-secondary mx-2'
+  },
+  buttonsStyling: false,
+  reverseButtons: true,
+})
 
 /////////////// Function Group Starts Here /////////////////
+// Render dynamic loading bar until both friend list and paginator are all ready
+function renderLoadingBar(functionResult1, functionResult2) {
+  dataPanel.classList.add('d-none')
+  paginator.classList.add('d-none')
+  let loadingBar
+
+  setTimeout(function () {
+    loadingBar = document.querySelectorAll('.ldBar')[0]
+    loadingBar.classList.remove('d-none')
+    loadingBar.ldBar.value = 0
+    loadingBar.ldBar.set(100)
+  }, 500)
+
+  const loadingTimer = setInterval(function () {
+    if (functionResult1 === true && functionResult2 === true && loadingBar.ldBar.value === 100) {
+      loadingBar.classList.add('d-none')
+      dataPanel.classList.remove('d-none')
+      paginator.classList.remove('d-none')
+      clearInterval(loadingTimer)
+    }
+  }, 1250)
+}
+
 // Render friend list in data panel
 function renderFriendList(data) {
   // Using array.map to create an array of HTML contents, then use 
@@ -59,6 +90,7 @@ function renderFriendList(data) {
         `
     }).join('')
   }
+  return true
 }
 
 // Get friend data array by specific page
@@ -136,30 +168,31 @@ function filterFriendsByForm(data) {
 // Render friend detail in modal
 function renderFriendModal(id) {
   // Using querySelector to extract specific DOM object for later change
-  const modalName = document.querySelector('#friend-modal-name')
-  const modalRegion = document.querySelector('#friend-modal-region')
-  const modalAge = document.querySelector('#friend-modal-age')
-  const modalGender = document.querySelector('#friend-modal-gender')
-  const modalEmail = document.querySelector('#friend-modal-email')
-  const image = document.querySelector('#friend-modal-image')
-  const removeFavoriteBtn = document.querySelector('#friend-modal-remove-favorite')
-  // Get rid of image first 
-  image.innerHTML = ''
-
   axios.get(`${INDEX_URL}/${id}`)
     .then(rep => {
-      const { name, surname, region, age, gender, email, avatar } = rep.data
+      const { id, name, surname, region, age, gender, email, avatar } = rep.data
       // Once extract all the data from server, we're going to map
       // related data to the modal content
-      modalName.textContent = `${name} ${surname}`
-      modalRegion.textContent = region
-      modalAge.textContent = age
-      modalGender.textContent = gender
-      modalEmail.href = `mailto://${email}`
-      image.innerHTML = `
-        <img src="${avatar}" alt="friend-image">
-      `
-      removeFavoriteBtn.dataset.id = id
+      sweetAlertWithBootstrapButtons.fire({
+        title: `${name} ${surname}`,
+        html: `
+        <ul class="list-group">
+          <li>Region: <strong id="friend-modal-region">${region}</strong></li>
+          <li>Age: <strong id="friend-modal-age">${age}</strong></li>
+          <li>Gender: <strong id="friend-modal-gender">${gender}</strong></li>
+          <li><a href="mailto://${email}" id="friend-modal-email">${email}</a></li>
+        </ul>
+        `,
+        imageUrl: `${avatar}`,
+        imageAlt: 'Friend Image',
+        imageHeight: '200px',
+        showCancelButton: true,
+        confirmButtonText: 'Remove From Favorites',
+        cancelButtonText: 'Close',
+      }).then(result => {
+        if (result.isConfirmed) removeFromFavorites(Number(id))
+      })
+
     }).catch(err => console.log(err))
 }
 
@@ -211,13 +244,25 @@ function renderPaginator(page) {
       </li>
   `
   paginator.innerHTML = rawHTML
+  return true
 }
 
 // Remove favorite item from localStorage
 function removeFromFavorites(id) {
-  const removedIndex = friendList.findIndex(friend => friend.id === id)
-  friendList.splice(removedIndex, 1)
-  localStorage.setItem('favoriteFriendList', JSON.stringify(friendList))
+  sweetAlertWithBootstrapButtons.fire({
+    icon: 'warning',
+    title: 'Are You Sure?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+  }).then(result => {
+    if (result.isConfirmed) {
+      const removedIndex = friendList.findIndex(friend => friend.id === id)
+      friendList.splice(removedIndex, 1)
+      localStorage.setItem('favoriteFriendList', JSON.stringify(friendList))
+      location.reload()
+    }
+  })
 }
 /////////////// Function Group Ends Here /////////////////
 
@@ -246,7 +291,6 @@ dataPanel.addEventListener('click', function onDataPanelClicked(event) {
 
 // For paginator
 paginator.addEventListener('click', function onPaginatorClicked(event) {
-
   if (event.target.tagName === 'A' || event.target.tagName === 'SPAN') {
     const activeLink = document.querySelector('li.page-item.active')
 
@@ -264,19 +308,13 @@ paginator.addEventListener('click', function onPaginatorClicked(event) {
     renderPaginator(CURRENT_PAGE)
   }
 })
-
-// For modal
-modalFooter.addEventListener('click', function onModalFooterClicked(event) {
-  if (event.target.matches('#friend-modal-remove-favorite')) {
-    removeFromFavorites(Number(event.target.dataset.id))
-    location.reload()
-  }
-})
 /////////////// Event Listener Group Ends Here /////////////////
 
 
 // Initialize the friend list and invoke the function to render
-renderFriendList(getFriendDataByPage(1))
+renderLoadingBar(
+  renderFriendList(getFriendDataByPage(1)), 
+  renderPaginator(1)
+)
 renderFormAgeOptions(friendList)
 renderFormRegionOptions(friendList)
-renderPaginator(1)
