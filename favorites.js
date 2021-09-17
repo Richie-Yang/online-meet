@@ -41,22 +41,22 @@ function renderFriendList(data) {
   // join function to merge them together
   if (data.length === 0) {
     dataPanel.innerHTML = `
-    <img class="my-5 w-75 mx-auto" src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png">
+      <img class="my-5 w-75 mx-auto" src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png">
     `
   } else {
-    dataPanel.innerHTML = data.map(dataItem => {
+    dataPanel.innerHTML = data.map(({ avatar, id, name, surname }) => {
       return `
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-3">
-      <div class="card">
-        <div class="card-image-wrapper">
-          <img src="${dataItem.avatar}" alt="friend-image" data-bs-toggle="modal" data-bs-target="#friend-modal" data-id=${dataItem.id}>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-3">
+          <div class="card">
+            <div class="card-image-wrapper">
+              <img src="${avatar}" alt="friend-image" data-bs-toggle="modal" data-bs-target="#friend-modal" data-id=${id}>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">${name} ${surname}</h5>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">${dataItem.name} ${dataItem.surname}</h5>
-        </div>
-      </div>
-    </div>
-    `
+        `
     }).join('')
   }
 }
@@ -88,8 +88,8 @@ function renderFormAgeOptions(data) {
       const startAgeNumber = (i * ageDifference) + minAge
       const endAgeNumber = startAgeNumber + ageDifference
       rawHTML += `
-    <option>${startAgeNumber} - ${endAgeNumber}</option>
-    `
+        <option>${startAgeNumber} - ${endAgeNumber}</option>
+      `
     }
   }
   formSelectAge.innerHTML = rawHTML
@@ -136,11 +136,11 @@ function filterFriendsByForm(data) {
 // Render friend detail in modal
 function renderFriendModal(id) {
   // Using querySelector to extract specific DOM object for later change
-  const name = document.querySelector('#friend-modal-name')
-  const region = document.querySelector('#friend-modal-region')
-  const age = document.querySelector('#friend-modal-age')
-  const gender = document.querySelector('#friend-modal-gender')
-  const email = document.querySelector('#friend-modal-email')
+  const modalName = document.querySelector('#friend-modal-name')
+  const modalRegion = document.querySelector('#friend-modal-region')
+  const modalAge = document.querySelector('#friend-modal-age')
+  const modalGender = document.querySelector('#friend-modal-gender')
+  const modalEmail = document.querySelector('#friend-modal-email')
   const image = document.querySelector('#friend-modal-image')
   const removeFavoriteBtn = document.querySelector('#friend-modal-remove-favorite')
   // Get rid of image first 
@@ -148,18 +148,18 @@ function renderFriendModal(id) {
 
   axios.get(`${INDEX_URL}/${id}`)
     .then(rep => {
-      const data = rep.data
+      const { name, surname, region, age, gender, email, avatar } = rep.data
       // Once extract all the data from server, we're going to map
       // related data to the modal content
-      name.textContent = `${data.name} ${data.surname}`
-      region.textContent = data.region
-      age.textContent = data.age
-      gender.textContent = data.gender
-      email.href = `mailto://${data.email}`
+      modalName.textContent = `${name} ${surname}`
+      modalRegion.textContent = region
+      modalAge.textContent = age
+      modalGender.textContent = gender
+      modalEmail.href = `mailto://${email}`
       image.innerHTML = `
-    <img src="${data.avatar}" alt="friend-image">
-    `
-      removeFavoriteBtn.dataset.id = data.id
+        <img src="${avatar}" alt="friend-image">
+      `
+      removeFavoriteBtn.dataset.id = id
     }).catch(err => console.log(err))
 }
 
@@ -255,8 +255,9 @@ paginator.addEventListener('click', function onPaginatorClicked(event) {
     } else if (event.target.matches('.page-previous')) {
       CURRENT_PAGE = Number(activeLink.firstElementChild.dataset.page) - 1 || 1
     } else if (event.target.matches('.page-next')) {
-      CURRENT_PAGE = Number(activeLink.firstElementChild.dataset.page) + 1 > TOTAL_PAGES ?
-      TOTAL_PAGES : Number(activeLink.firstElementChild.dataset.page) + 1
+      CURRENT_PAGE = Number(activeLink.firstElementChild.dataset.page) + 1 > TOTAL_PAGES
+                     ? TOTAL_PAGES
+                     : Number(activeLink.firstElementChild.dataset.page) + 1
     } else return
 
     renderFriendList(getFriendDataByPage(CURRENT_PAGE))

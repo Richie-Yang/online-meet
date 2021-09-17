@@ -207,6 +207,7 @@ footer {
     left: 8%;
     width: 83.5vw;
   }
+
   .card {
     min-height: 16rem;
     min-width: 13rem;
@@ -218,6 +219,7 @@ footer {
     left: 7%;
     width: 86.5vw;
   }
+
   .carousel-item {
     height: 400px;
   }
@@ -228,6 +230,7 @@ footer {
     left: 4.5%;
     width: 91.5vw;
   }
+
   .carousel-item {
     height: 500px;
   }
@@ -237,15 +240,19 @@ footer {
   main::before {
     width: 91vw;
   }
+
   #top-panel {
     transform: scale(.94, 1);
   }
+
   .carousel-item {
     height: 600px;
   }
+
   #carousel-image-1, #carousel-image-2, #carousel-image-3 {
     border-radius: 5px;
   }
+  
   #carousel-images-set {
     margin: 0 auto;
   }
