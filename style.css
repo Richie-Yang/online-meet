@@ -47,7 +47,7 @@ main::before {
   content: '';
   top: 0;
   left: 6%;
-  width: 87vw;
+  width: 86.5vw;
   height: 110vh;
   z-index: -1;
   background-color: rgba(250,250,250,.8);
@@ -203,6 +203,10 @@ footer {
 }
 
 @media screen and (min-width: 576px) {
+  main::before {
+    left: 8%;
+    width: 83.5vw;
+  }
   .card {
     min-height: 16rem;
     min-width: 13rem;
@@ -211,7 +215,8 @@ footer {
 
 @media screen and (min-width: 768px) {
   main::before {
-    width: 88.5vw;
+    left: 7%;
+    width: 86.5vw;
   }
   .carousel-item {
     height: 400px;
@@ -219,12 +224,19 @@ footer {
 }
 
 @media screen and (min-width: 992px) {
+  main::before {
+    left: 4.5%;
+    width: 91.5vw;
+  }
   .carousel-item {
     height: 500px;
   }
 }
 
 @media screen and (min-width: 1200px) {
+  main::before {
+    width: 91vw;
+  }
   #top-panel {
     transform: scale(.94, 1);
   }
@@ -239,23 +251,30 @@ footer {
   }
 }
 
+@media screen and (min-width: 1400px) {
+  main::before {
+    left: 7%;
+    width: 86vw;
+  }
+}
+
 @media screen and (min-width: 1600px) {
   main::before {
-    left: 9%;
-    width: 81.5vw;
+    left: 11.5%;
+    width: 77vw;
   }
 }
 
 @media screen and (min-width: 1800px) {
   main::before {
-    left: 15%;
-    width: 70vw;
+    left: 16%;
+    width: 68vw;
   }
 }
 
 @media screen and (min-width: 2200px) {
   main::before {
-    left: 20%;
-    width: 60vw;
+    left: 22%;
+    width: 56vw;
   }
 }
