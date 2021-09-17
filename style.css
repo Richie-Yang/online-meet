@@ -161,7 +161,8 @@ main::before {
 /*   outline: 3px solid lightblue; */
   position: relative;
   z-index: 1;
-  width: 150px;
+  min-width: 150px;
+  min-height: 150px;
   border-radius: 50%;
   -webkit-transition: all .5s;
   -moz-transition: all .5s;

@@ -181,7 +181,7 @@ function renderFriendModal(id) {
         </ul>
         `,
         imageUrl: `${avatar}`,
-        imageAlt: 'Friend Image',
+        imageAlt: 'friend-image',
         imageHeight: '200px',
         showCancelButton: true,
         confirmButtonText: 'Add to Favorites',
