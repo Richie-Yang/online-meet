@@ -22,6 +22,8 @@
 - Using Axios to request remote server resources, then process them in brower local.
 - Handmade both search-form filtering logic and pagination logic.
 - Archive your interest to favorite list by using localStorage tech.
+- Using SweetAlert for modal-related actions. (added at 2021/9/17)
+- Using Loading.io for progress status before friend list loaded up. (added at 2021/9/17)
 
 ## Other Screenshots
 
