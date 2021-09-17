@@ -249,16 +249,26 @@ function addToFavorites(id){
   const favoriteList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
   if (favoriteList.some(favoriteFriend => favoriteFriend.id === id)) {
     sweetAlertWithBootstrapButtons.fire({
-      icon: 'warning',
+      icon: 'info',
       title: 'Already In Favorite List!',
       showCancelButton: true,
       showConfirmButton: false,
       cancelButtonText: 'Close',
     })
     return
+  } else {
+    sweetAlertWithBootstrapButtons.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Added Into Favorite List!',
+      showConfirmButton: false,
+      height: 100,
+      width: 400,
+      timer: 800,
+    })
+    favoriteList.push(friendList.find(friend => friend.id === id))
+    localStorage.setItem('favoriteFriendList', JSON.stringify(favoriteList))
   }
-  favoriteList.push(friendList.find(friend => friend.id === id))
-  localStorage.setItem('favoriteFriendList', JSON.stringify(favoriteList))
 }
 /////////////// Function Group Ends Here /////////////////
 
