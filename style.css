@@ -79,7 +79,7 @@ main::before {
 
 #carousel-image-1, #carousel-image-2, #carousel-image-3 {
   height: 100%;
-  max-width: 1300px;
+  max-width: 100%;
   margin: 0 auto;
   background-position: 0 -30px;
   background-size: cover;
@@ -113,7 +113,7 @@ main::before {
   min-width: 75vw;
   max-width: 16rem;
   margin: 0 auto;
-  border-radius: 10px;
+  border-radius: .5rem;
   overflow: hidden;
   box-shadow: -3px 8px 2px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
   transition: box-shadow .3s ease-in-out;
@@ -130,7 +130,7 @@ main::before {
   right: .5rem;
   bottom: .5rem;
   left: .5rem;
-  border-radius: 5%;
+  border-radius: 10px;
   transition: transform .5s ease-in-out, opacity .5s ease-out;
   opacity: 0;
 }
@@ -187,7 +187,9 @@ main::before {
 }
 
 .card-body {
-  max-width: 160px;
+  max-width: 100px;
+  padding: 0;
+  margin-right: 5%;
   transition: transform .5s;
 }
 
@@ -224,7 +226,6 @@ footer {
     align-items: initial;
     min-height: 16rem;
     min-width: 13rem;
-    border-radius: 5%;
   }
 
   .card-image-wrapper {
@@ -242,6 +243,8 @@ footer {
 
   .card-body {
     max-width: initial;
+    padding: 1rem;
+    margin-right: 0;
   }
 }
 
