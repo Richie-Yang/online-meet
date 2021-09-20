@@ -106,7 +106,10 @@ main::before {
 
 .card {
   position: relative;
-  min-height: 17rem;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  min-height: 8rem;
   min-width: 75vw;
   max-width: 16rem;
   margin: 0 auto;
@@ -151,8 +154,7 @@ main::before {
 
 .card-image-wrapper {
 /*   outline: 3px solid tomato; */
-  border: 4px solid lightblue;
-  margin: 10% auto 0 auto;
+  border: 2px solid lightblue;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -161,8 +163,8 @@ main::before {
 /*   outline: 3px solid lightblue; */
   position: relative;
   z-index: 1;
-  min-width: 150px;
-  min-height: 150px;
+  max-width: 85px;
+  max-height: 85px;
   border-radius: 50%;
   -webkit-transition: all .5s;
   -moz-transition: all .5s;
@@ -180,11 +182,12 @@ main::before {
 }
 
 .card-title {
-  margin: 0;
-  text-align: center;
+    margin: 0;
+    text-align: center;
 }
 
 .card-body {
+  max-width: 160px;
   transition: transform .5s;
 }
 
@@ -216,8 +219,28 @@ footer {
   }
 
   .card {
+    flex-direction: column;
+    justify-content: initial;
+    align-items: initial;
     min-height: 16rem;
     min-width: 13rem;
+  }
+
+  .card-image-wrapper {
+  /*   outline: 3px solid tomato; */
+    margin: 10% auto 0 auto;
+  }
+
+  .card-image-wrapper img {
+  /*   outline: 3px solid lightblue; */
+    min-width: 150px;
+    min-height: 150px;
+    max-width: initial;
+    max-height: initial; 
+  }
+
+  .card-body {
+    max-width: initial;
   }
 }
 
