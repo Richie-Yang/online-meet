@@ -46,7 +46,7 @@ main::before {
   position: fixed;
   content: '';
   top: 0;
-  left: 6%;
+  left: 6vw;
   width: 86.5vw;
   height: 110vh;
   z-index: -1;
@@ -100,7 +100,7 @@ main::before {
 .ldBar {
   color: rgb(98, 176, 243);
   font-family: 'varela round';
-  font-size: 2em;
+  font-size: 2rem;
   font-weight: 800;
 }
 
@@ -214,7 +214,7 @@ footer {
 
 @media screen and (min-width: 576px) {
   main::before {
-    left: 8%;
+    left: 8vw;
     width: 83.5vw;
   }
 
@@ -246,7 +246,7 @@ footer {
 
 @media screen and (min-width: 768px) {
   main::before {
-    left: 7%;
+    left: 7vw;
     width: 86.5vw;
   }
 
@@ -257,7 +257,7 @@ footer {
 
 @media screen and (min-width: 992px) {
   main::before {
-    left: 4.5%;
+    left: 4.5vw;
     width: 91.5vw;
   }
 
@@ -290,28 +290,28 @@ footer {
 
 @media screen and (min-width: 1400px) {
   main::before {
-    left: 7%;
+    left: 7vw;
     width: 86vw;
   }
 }
 
 @media screen and (min-width: 1600px) {
   main::before {
-    left: 11.5%;
+    left: 11.5vw;
     width: 77vw;
   }
 }
 
 @media screen and (min-width: 1800px) {
   main::before {
-    left: 16%;
+    left: 16vw;
     width: 68vw;
   }
 }
 
 @media screen and (min-width: 2200px) {
   main::before {
-    left: 22%;
+    left: 22vw;
     width: 56vw;
   }
 }
