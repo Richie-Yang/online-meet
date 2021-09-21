@@ -260,8 +260,8 @@ footer {
 
   .added-to-favorite .card-image-wrapper::after {
     font-size: 3rem;
-    top: 22.5%;
-    left: 35%;
+    top: 0%;
+    right: 5%;
   }
 
   .card-body {
@@ -311,7 +311,7 @@ footer {
   }
 
   .added-to-favorite .card-image-wrapper::after {
-    left: 37.5%;
+    right: 15%;
   }
 }
 

@@ -288,17 +288,7 @@ function renderPaginator(page) {
 
 // add favorite item into localStorage
 function addToFavorites(id){
-  // const favoriteList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
-  if (favoriteList.some(favoriteFriend => favoriteFriend.id === id)) {
-    sweetAlertWithBootstrapButtons.fire({
-      icon: 'info',
-      title: 'Already In Favorite List!',
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonText: 'Close',
-    })
-    return
-  } else {
+  if (!favoriteList.some(favoriteFriend => favoriteFriend.id === id)) {
     sweetAlertWithBootstrapButtons.fire({
       icon: 'success',
       title: 'Added Into Favorite List!',
