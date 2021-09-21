@@ -51,7 +51,7 @@ function renderLoadingBar(functionResult1, functionResult2) {
 
   new Promise(resolve => {
     const barIconCheck = setInterval(() => {
-      if (loadingBar === undefined) {
+      if (document.readyState === 'complete' && loadingBar === undefined) {
         loadingBar = document.querySelectorAll('.ldBar')[0]
         loadingBar.classList.remove('d-none')
         loadingBar.ldBar.value = 0
