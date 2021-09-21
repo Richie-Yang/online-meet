@@ -12,6 +12,7 @@ const FRIENDS_PER_PAGE = 12
 let TOTAL_PAGES = 0
 let CURRENT_PAGE = 1
 const friendList = []
+const favoriteList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
 let filteredFriendList = []
 const countryMap = {
   ch: 'Switzerland (CH)',
@@ -82,8 +83,23 @@ function renderFriendList(data) {
       <img class="my-5 w-75 mx-auto" src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png">
     `
   } else {
+    const favoriteListID = favoriteList.map(({id}) => id)
     dataPanel.innerHTML = data.map(({ avatar, id, name, surname }) => {
-      return `
+      if (favoriteListID.includes(id)) {
+        return `
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-3">
+          <div class="card added-to-favorite">
+            <div class="card-image-wrapper">
+              <img src="${avatar}" alt="friend-image" data-bs-toggle="modal" data-bs-target="#friend-modal" data-id=${id}>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">${name} ${surname}</h5>
+            </div>
+          </div>
+        </div>
+        `
+      } else {
+        return `
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-3">
           <div class="card">
             <div class="card-image-wrapper">
@@ -95,6 +111,7 @@ function renderFriendList(data) {
           </div>
         </div>
         `
+      }
     }).join('')
   }
   return true
@@ -177,24 +194,43 @@ function renderFriendModal(id) {
       const { id, name, surname, region, age, gender, avatar } = rep.data
       // Once extract all the data from server, we're going to map
       // related data to the modal content
-      sweetAlertWithBootstrapButtons.fire({
-        title: `${name} ${surname}`,
-        html: `
+      const favoriteListID = favoriteList.map(({ id }) => id)
+      const rawHTML = `
         <ul class="list-group">
           <li>Region: <strong id="friend-modal-region">${region}</strong></li>
           <li>Age: <strong id="friend-modal-age">${age}</strong></li>
           <li>Gender: <strong id="friend-modal-gender">${gender}</strong></li>
         </ul>
-        `,
-        imageUrl: `${avatar}`,
-        imageAlt: 'friend-image',
-        imageHeight: '200px',
-        showCancelButton: true,
-        confirmButtonText: 'Add to Favorites',
-        cancelButtonText: 'Not interest',
-      }).then(result => {
-        if (result.isConfirmed) addToFavorites(Number(id))
-      })
+      `
+
+      if (favoriteListID.includes(id)) {
+        sweetAlertWithBootstrapButtons.fire({
+          title: `${name} ${surname}`,
+          html: rawHTML,
+          imageUrl: `${avatar}`,
+          imageAlt: 'friend-image',
+          imageHeight: '200px',
+          showCancelButton: true,
+          showConfirmButton: false,
+          cancelButtonText: 'Close',
+        })
+      } else {
+        sweetAlertWithBootstrapButtons.fire({
+          title: `${name} ${surname}`,
+          html: rawHTML,
+          imageUrl: `${avatar}`,
+          imageAlt: 'friend-image',
+          imageHeight: '200px',
+          showCancelButton: true,
+          confirmButtonText: 'Add to Favorites',
+          cancelButtonText: 'Not interest',
+        }).then(result => {
+          if (result.isConfirmed) {
+            addToFavorites(Number(id))
+            renderFriendList(getFriendDataByPage(CURRENT_PAGE))
+          }
+        })
+      }
 
     }).catch(err => console.log(err))
 }
@@ -252,7 +288,7 @@ function renderPaginator(page) {
 
 // add favorite item into localStorage
 function addToFavorites(id){
-  const favoriteList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
+  // const favoriteList = JSON.parse(localStorage.getItem('favoriteFriendList')) || []
   if (favoriteList.some(favoriteFriend => favoriteFriend.id === id)) {
     sweetAlertWithBootstrapButtons.fire({
       icon: 'info',
@@ -267,7 +303,6 @@ function addToFavorites(id){
       icon: 'success',
       title: 'Added Into Favorite List!',
       showConfirmButton: false,
-      height: 200,
       width: 400,
       timer: 800,
     })
