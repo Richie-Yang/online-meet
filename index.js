@@ -50,21 +50,27 @@ function renderLoadingBar(functionResult1, functionResult2) {
   paginator.classList.add('d-none')
   let loadingBar
 
-  setTimeout(function () {
-    loadingBar = document.querySelectorAll('.ldBar')[0]
-    loadingBar.classList.remove('d-none')
-    loadingBar.ldBar.value = 0
-    loadingBar.ldBar.set(100)
-  }, 500)
-
-  const loadingTimer = setInterval(function () {
-    if (functionResult1 === true && functionResult2 === true && loadingBar.ldBar.value === 100) {
-      loadingBar.classList.add('d-none')
-      dataPanel.classList.remove('d-none')
-      paginator.classList.remove('d-none')
-      clearInterval(loadingTimer)
-    }
-  }, 1250)
+  new Promise(resolve => {
+    const barIconCheck = setInterval(() => {
+      if (loadingBar === undefined) {
+        loadingBar = document.querySelectorAll('.ldBar')[0]
+        loadingBar.classList.remove('d-none')
+        loadingBar.ldBar.value = 0
+        loadingBar.ldBar.set(100)
+        clearInterval(barIconCheck)
+        resolve()
+      }
+    }, 100)
+  }).then(() => {
+    const loadingTimer = setInterval(() => {
+      if (functionResult1 === true && functionResult2 === true && loadingBar.ldBar.value === 100) {
+        loadingBar.classList.add('d-none')
+        dataPanel.classList.remove('d-none')
+        paginator.classList.remove('d-none')
+        clearInterval(loadingTimer)
+      }
+    }, 1000)
+  })
 }
 
 // Render friend list in data panel
