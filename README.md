@@ -1,7 +1,7 @@
 # OlineMeet
 
 <p align="center">
-  <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/1.%20desktop-1.jpg?raw=true">
+  <img src="http://github.com/Richie-Yang/online-meet/blob/main/images/online-meet.gif?raw=true">
 </p>
 
 ## Features
@@ -27,6 +27,12 @@
 
 ## Other Screenshots
 
+### index.html main view
+
+<p align="center">
+  <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/1.%20desktop-1.jpg?raw=true">
+</p>
+
 ### index.html footer view
 
 <p align="center">
@@ -34,6 +40,7 @@
 </p>
 
 ### favorites.html footer view
+
 <p align="center">
   <img src="https://github.com/Richie-Yang/online-meet/blob/main/images/3.%20desktop-3.jpg?raw=true">
 </p>
