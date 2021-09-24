@@ -1,4 +1,4 @@
-# OlineMeet
+# OnlineMeet
 
 <p align="center">
   <img src="http://github.com/Richie-Yang/online-meet/blob/main/images/online-meet.gif?raw=true">
